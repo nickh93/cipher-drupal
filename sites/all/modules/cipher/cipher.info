@@ -1,0 +1,5 @@
+name = Cipher
+description = Takes a phrase and returns your given phrase after running it through a shift cipher.
+core = 7.x
+package = Custom
+files[] = cipher.module
