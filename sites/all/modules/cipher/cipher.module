@@ -24,7 +24,7 @@ function cipher_form() {
         '#type' => 'textfield',
         '#description' => 'Enter your initial phrase.',
         '#required' => TRUE,
-        '#element_validate' => array('element_validate_cipher_phrase'),
+        '#element_validate' => array('element_validate_phrase'),
     );
 
     $form['shift_direction'] = array(
@@ -32,7 +32,7 @@ function cipher_form() {
         '#type' => 'textfield',
         '#description' => 'Enter the direction to which you desire to shift the letters (left or right).',
         '#required' => TRUE,
-        '#element_validate' => array('element_validate_cipher_direction'),
+        '#element_validate' => array('element_validate_direction'),
     );
 
     $form['shift_value']=array(
@@ -50,3 +50,27 @@ function cipher_form() {
 
     return $form;
 }
+
+function element_validate_direction($element) {
+     if(!strtolower($element['#value']) == 'left' || !strtolower($element['#value']) == 'right') {
+        form_error($element, t('You must enter either "left" or "right"'));
+    }
+}
+
+function element_validate_phrase($element) {
+    $letters = str_split($element['#value']);
+    $special_char = array("'", ' ', '!', '?', '.', ',');
+    foreach ($letters as $letter) {
+        if (!ctype_alpha($letter)) {
+            if(!in_array($letter, $special_char)) {
+                form_error($element, t("you may only encrypt letters in the alphabet, other charactes you can use include: ' ! . , ? or blank spaces in your phrase."));
+            }
+        }
+    }
+}
+ function element_validate_cipher_value($element) {
+    $value = $element["#value"];
+    if (intval($value) < 1) {
+      form_error($element, t('please enter a number greater than or equal to 1'));
+    }
+ }
