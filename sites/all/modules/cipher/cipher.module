@@ -35,6 +35,14 @@ function cipher_form() {
         '#element_validate' => array('element_validate_cipher_direction'),
     );
 
+    $form['shift_value']=array(
+        '#title' => 'Shift Value',
+        '#type' => 'textfield',
+        '#description' => 'Enter number of spaces to shift the letters.',
+        '#required' => TRUE,
+        '#element_validate' => array('element_validate_cipher_value'),
+  );
+
     $form['submit'] = array(
         '#type' => 'submit',
         '#value' => 'Submit',
